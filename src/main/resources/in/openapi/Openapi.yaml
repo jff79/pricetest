@@ -1,0 +1,75 @@
+openapi: 3.0.1
+info:
+  title: Price Test Application
+  description: Test Spring Boot applications ITX price test
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Generated server url
+paths:
+  /prices/search:
+    get:
+      tags:
+        - price-controller
+      operationId: pricesSearch
+      parameters:
+        - name: priceRequest
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/PriceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PriceResponse'
+components:
+  schemas:
+    PriceRequest:
+      required:
+        - applyDate
+        - brandId
+        - productId
+      type: object
+      properties:
+        applyDate:
+          type: string
+          format: date-time
+        productId:
+          type: integer
+          format: int64
+        brandId:
+          minimum: 0
+          type: integer
+          format: int32
+    PriceResponse:
+      required:
+        - brandId
+        - endDate
+        - feeId
+        - price
+        - productId
+        - startDate
+      type: object
+      properties:
+        brandId:
+          minimum: 0
+          type: integer
+          format: int32
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        feeId:
+          type: integer
+          format: int32
+        productId:
+          type: integer
+          format: int64
+        price:
+          type: number
+          format: double
